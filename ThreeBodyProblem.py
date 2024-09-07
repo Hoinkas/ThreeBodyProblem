@@ -1,6 +1,6 @@
 import pygame
-from Planet import Planet
-from Variables import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK
+from ThreeBodyProblem.Objects.Planet import Planet
+from ThreeBodyProblem.Objects.Variables import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK
 
 # Initialization
 pygame.init()

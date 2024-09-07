@@ -1,5 +1,5 @@
 import pygame
-from Variables import *
+from ThreeBodyProblem.Objects.Variables import *
 
 class Trail(pygame.sprite.Sprite):
     def __init__(self, *groups):

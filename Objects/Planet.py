@@ -1,6 +1,6 @@
 import pygame
-from Variables import *
-from Trail import Trail
+from ThreeBodyProblem.Objects.Variables import *
+from ThreeBodyProblem.Objects.Trail import Trail
 
 class Planet(pygame.sprite.Sprite):
   def __init__(self, color, speed, *groups):
