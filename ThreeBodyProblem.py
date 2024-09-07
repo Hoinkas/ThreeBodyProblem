@@ -1,6 +1,7 @@
 import pygame
-from ThreeBodyProblem.Objects.Planet import Planet
-from ThreeBodyProblem.Objects.Variables import SCREEN_WIDTH, SCREEN_HEIGHT, WHITE, BLACK
+import random
+from Objects.Planet import Planet
+from Objects.Variables import *
 
 # Initialization
 pygame.init()
@@ -9,7 +10,11 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("One Body Problem")
 
 all_sprites = pygame.sprite.Group()
-planet = Planet(WHITE, 1, all_sprites)
+
+for counter in range(0, 2):
+  width = random.randint(0, SCREEN_WIDTH)
+  height = random.randint(0, SCREEN_HEIGHT)
+  planet = Planet(all_sprites, colour=COLOURS[counter], pos=(width, height))
 
 clock = pygame.time.Clock()
 
@@ -23,7 +28,7 @@ while running:
       running = False
 
   screen.fill(BLACK)
-  planet.update()
+  all_sprites.update()
 
   for entity in all_sprites:
     screen.blit(entity.surf, entity.rect)
