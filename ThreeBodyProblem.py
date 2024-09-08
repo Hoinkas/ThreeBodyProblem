@@ -9,14 +9,16 @@ pygame.font.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Two Body Problem")
 
+how_many_planets = 3
+
 def initializePlanets():
   Planet.restart()
   
-  for counter in range(0, 2):
+  for counter in range(0, how_many_planets):
     width = random.randint(0, SCREEN_WIDTH/2)
     height = random.randint(0, SCREEN_HEIGHT/2)
     angle = random.uniform(0, 2.0* math.pi)
-    speed = 5
+    speed = random.randint(0, 10)
     acc = pygame.Vector2(speed * math.cos(angle), speed * math.sin(angle))
     Planet(colour=COLOURS[counter], pos=(width, height), acc=acc)
 
@@ -26,6 +28,8 @@ RUNNING, PAUSE = 0, 1
 state = RUNNING
 
 while True:
+  print(Planet.restartBool)
+  if Planet.restartBool: initializePlanets()
   dt = clock.tick(60) / 1000
 
   for event in pygame.event.get():

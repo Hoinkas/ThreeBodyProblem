@@ -6,10 +6,12 @@ from Objects.Text import Text
 
 class Planet(pygame.sprite.Sprite):
   group = pygame.sprite.Group()
+  restartBool = False
 
   def restart():
     for sprite in Planet.group:
       sprite.kill()
+    Planet.restartBool = False
 
   def __init__(self, colour, pos, acc):
     super(Planet, self).__init__()
@@ -39,19 +41,13 @@ class Planet(pygame.sprite.Sprite):
     acc = self.calculateMathFormula()
     print('acc', acc, dt)
 
-    if self.pos.x >= SCREEN_WIDTH:
-      self.x_forward = False
-      self.pos.x = SCREEN_WIDTH
-    elif self.pos.x <= 0:
-      self.x_forward = True
-      self.pos.x = 0
-      
-    if self.pos.y >= SCREEN_HEIGHT:
-      self.y_forward = False
-      self.pos.y = SCREEN_HEIGHT
-    elif self.pos.y <= 0:
-      self.y_forward = True
-      self.pos.y = 0
+    print('check1', 0 <= self.pos.x <= SCREEN_WIDTH)
+    print('check2', 0 <= self.pos.y <= SCREEN_HEIGHT)
+
+    if not 0 <= self.pos.x <= SCREEN_WIDTH:
+      Planet.restartBool = True
+    if not 0 <= self.pos.y <= SCREEN_HEIGHT:
+      Planet.restartBool = True
     
     accVector = pygame.Vector2(((-1) ** (self.x_forward + 1)) * acc.x, ((-1) ** (self.y_forward + 1)) * acc.y)
     
