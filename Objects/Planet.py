@@ -39,10 +39,7 @@ class Planet(pygame.sprite.Sprite):
 
   def update(self, dt):
     acc = self.calculateMathFormula()
-    print('acc', acc, dt)
-
-    print('check1', 0 <= self.pos.x <= SCREEN_WIDTH)
-    print('check2', 0 <= self.pos.y <= SCREEN_HEIGHT)
+    # print('acc', acc, dt)
 
     if not 0 <= self.pos.x <= SCREEN_WIDTH:
       Planet.restartBool = True
@@ -51,12 +48,12 @@ class Planet(pygame.sprite.Sprite):
     
     accVector = pygame.Vector2(((-1) ** (self.x_forward + 1)) * acc.x, ((-1) ** (self.y_forward + 1)) * acc.y)
     
-    print('pos', self.pos, accVector)
+    # print('pos', self.pos, accVector)
     self.acceleration += accVector
     self.pos += self.acceleration
     
     self.rect.center = self.pos
-    print('---------------')
+    # print('---------------')
 
   def getAllOtherPlanets(self):
     return [sprite for sprite in Planet.group if type(sprite) is Planet and sprite != self]
@@ -68,8 +65,8 @@ class Planet(pygame.sprite.Sprite):
     for planet in self.getAllOtherPlanets():
       r = planet.pos - self.pos
       distance = r.length()
-      print('planets', planet.pos, self.pos)
+      # print('planets', planet.pos, self.pos)
       newVector += planet.mass * (r/(distance**3))
-      print('newVector', newVector)
+      # print('newVector', newVector)
 
     return G * newVector
