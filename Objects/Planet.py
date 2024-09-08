@@ -3,21 +3,21 @@ from Objects.Variables import *
 from Objects.Trail import Trail
 
 class Planet(pygame.sprite.Sprite):
-  def __init__(self, *groups, colour, pos):
-    super(Planet, self).__init__(*groups)
+  group = pygame.sprite.Group()
+
+  def __init__(self, colour, pos):
+    super(Planet, self).__init__()
+    Planet.group.add(self)
+    self.trail = Trail(Planet.group, planet=self)
     self.colour = colour
-    self.trail = Trail(*groups, planet=self)
     self.speed = 1
 
     self.surf = pygame.Surface([15, 15])
     self.surf.fill(BLACK)
     self.surf.set_colorkey(BLACK)
-    self.pos = pygame.math.Vector2(
-        (SCREEN_WIDTH - self.surf.get_width()) / 2,
-        (SCREEN_HEIGHT - self.surf.get_height()) / 2 + 20
-      )
-  
+          
     self.rect = self.surf.get_rect(center = pos)
+    self.pos = pygame.math.Vector2(pos)
 
     self.x_forward = True
     self.y_forward = True
@@ -27,8 +27,9 @@ class Planet(pygame.sprite.Sprite):
 
   def update(self):
     time = pygame.time.get_ticks() / 1000
-    x = (1 / 2) * self.speed * (time ** 2)
-    y = (1 / 2) * self.speed * (time ** 2)
+    acc = pygame.math.Vector2((1 / 2) * self.speed * (time ** 2))
+
+    print(self.getAllOtherSprites())
 
     if self.rect.right >= SCREEN_WIDTH:
       self.x_forward = False
@@ -40,4 +41,7 @@ class Planet(pygame.sprite.Sprite):
     elif self.rect.top <= 0:
       self.y_forward = True
     
-    self.rect.move_ip(((-1) ** (self.x_forward + 1)) * x, ((-1) ** (self.y_forward + 1)) * y)
+    self.rect.move_ip(((-1) ** (self.x_forward + 1)) * acc.x, ((-1) ** (self.y_forward + 1)) * acc.y)
+
+  def getAllOtherSprites(self):
+    return [sprite for sprite in Planet.group if type(sprite) is Planet and sprite != self]

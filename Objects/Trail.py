@@ -2,12 +2,11 @@ import pygame
 from Objects.Variables import *
 
 class Trail(pygame.sprite.Sprite):
-    def __init__(self, *groups, planet):
-        super(Trail, self).__init__(*groups)
+    def __init__(self, group, planet):
+        super(Trail, self).__init__(group)
         self.positions = []
         self.surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.rect = self.surf.get_rect()
-        self.colour = planet.colour
         self.planet = planet
 
     def update(self):
@@ -15,4 +14,4 @@ class Trail(pygame.sprite.Sprite):
 
         for i in range(len(self.positions)):
             if i < 2: continue
-            pygame.draw.line(self.surf, self.colour, self.positions[i-1], self.positions[i], 1)
+            pygame.draw.line(self.surf, self.planet.colour, self.positions[i-1], self.positions[i], 1)
