@@ -9,7 +9,7 @@ class Trail(pygame.sprite.Sprite):
         self.rect = self.surf.get_rect()
         self.planet = planet
 
-    def update(self):
+    def update(self, dt):
         self.positions.append((self.planet.rect.centerx, self.planet.rect.centery))
 
         for i in range(len(self.positions)):
