@@ -1,10 +1,10 @@
-import pygame
-import random
+import pygame, random, math
 from Objects.Planet import Planet
 from Objects.Variables import *
 
 # Initialization
 pygame.init()
+pygame.font.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("One Body Problem")
@@ -15,30 +15,40 @@ def initializePlanets():
   for counter in range(0, 2):
     width = random.randint(0, SCREEN_WIDTH/2)
     height = random.randint(0, SCREEN_HEIGHT/2)
-    Planet(colour=COLOURS[counter], pos=(width, height))
+    angle = random.uniform(0, 2.0* math.pi)
+    speed = 15
+    acc = pygame.Vector2(speed * math.cos(angle), speed * math.sin(angle))
+    Planet(colour=COLOURS[counter], pos=(width, height), acc=acc)
 
 clock = pygame.time.Clock()
 
-running = True
-while running:
+RUNNING, PAUSE = 0, 1
+state = RUNNING
+
+while True:
   dt = clock.tick(60) / 1000
 
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
-        running = False
+        pygame.quit()
       if event.key == pygame.K_r:
         initializePlanets()
+      if event.key == pygame.K_SPACE:
+        if state == PAUSE: state = RUNNING
+        else: state = PAUSE
     elif event.type == pygame.QUIT:
-      running = False
+      pygame.quit()
 
   screen.fill(BLACK)
-  Planet.group.update(dt)
 
   for entity in Planet.group:
     screen.blit(entity.surf, entity.rect)
 
   pygame.display.flip()
-  clock.tick(600)
+  clock.tick(60)
 
-pygame.quit()
+  if state == RUNNING:
+    Planet.group.update(dt)
+
+  # elif state == PAUSE:

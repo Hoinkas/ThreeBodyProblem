@@ -2,6 +2,7 @@ import pygame
 import math
 from Objects.Variables import *
 from Objects.Trail import Trail
+from Objects.Text import Text
 
 class Planet(pygame.sprite.Sprite):
   group = pygame.sprite.Group()
@@ -10,7 +11,7 @@ class Planet(pygame.sprite.Sprite):
     for sprite in Planet.group:
       sprite.kill()
 
-  def __init__(self, colour, pos):
+  def __init__(self, colour, pos, acc):
     super(Planet, self).__init__()
     Planet.group.add(self)
 
@@ -22,11 +23,14 @@ class Planet(pygame.sprite.Sprite):
     self.pos = pygame.math.Vector2(pos)
 
     self.trail = Trail(Planet.group, planet=self)
+    # self.text = Text(Planet.group, planet=self)
+
     self.colour = colour
-    self.speed = 1
+    self.acceleration = acc
     radius = self.surf.get_width() // 2
-    density = 2000
-    self.mass = (4/3) * math.pi * radius * 3 * density
+    density = 14
+    sun_radius = 694
+    self.mass = (4/3) * math.pi * sun_radius * 3 * density
 
     self.x_forward = True
     self.y_forward = True
@@ -50,20 +54,22 @@ class Planet(pygame.sprite.Sprite):
     elif self.pos.y <= 0:
       self.y_forward = True
       self.pos.y = 0
-
+    
     accVector = pygame.Vector2(((-1) ** (self.x_forward + 1)) * acc.x, ((-1) ** (self.y_forward + 1)) * acc.y)
     
     print('pos', self.pos, accVector)
-    self.pos += accVector
+    self.acceleration += accVector
+    self.pos += self.acceleration
     
     self.rect.center = self.pos
+    print('---------------')
 
   def getAllOtherPlanets(self):
     return [sprite for sprite in Planet.group if type(sprite) is Planet and sprite != self]
   
   def calculateMathFormula(self):
     G = 1
-    newVector = pygame.math.Vector2(0,0)
+    newVector = pygame.Vector2(0,0)
 
     for planet in self.getAllOtherPlanets():
       r = planet.pos - self.pos
