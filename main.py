@@ -9,12 +9,10 @@ pygame.font.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Two Body Problem")
 
-how_many_planets = 3
-
 def initializePlanets():
   Planet.restart()
   
-  for counter in range(0, how_many_planets):
+  for counter in range(0, PLANETS_COUNT):
     width = random.randint(0, SCREEN_WIDTH/2)
     height = random.randint(0, SCREEN_HEIGHT/2)
     angle = random.uniform(0, 2.0* math.pi)
