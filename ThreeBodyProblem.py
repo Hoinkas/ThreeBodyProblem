@@ -7,7 +7,7 @@ pygame.init()
 pygame.font.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("One Body Problem")
+pygame.display.set_caption("Two Body Problem")
 
 def initializePlanets():
   Planet.restart()
@@ -16,7 +16,7 @@ def initializePlanets():
     width = random.randint(0, SCREEN_WIDTH/2)
     height = random.randint(0, SCREEN_HEIGHT/2)
     angle = random.uniform(0, 2.0* math.pi)
-    speed = 15
+    speed = 5
     acc = pygame.Vector2(speed * math.cos(angle), speed * math.sin(angle))
     Planet(colour=COLOURS[counter], pos=(width, height), acc=acc)
 
@@ -46,7 +46,7 @@ while True:
     screen.blit(entity.surf, entity.rect)
 
   pygame.display.flip()
-  clock.tick(60)
+  clock.tick(600)
 
   if state == RUNNING:
     Planet.group.update(dt)

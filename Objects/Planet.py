@@ -27,14 +27,12 @@ class Planet(pygame.sprite.Sprite):
 
     self.colour = colour
     self.acceleration = acc
-    radius = self.surf.get_width() // 2
-    density = 14
-    sun_radius = 694
-    self.mass = (4/3) * math.pi * sun_radius * 3 * density
+    self.mass = 6000 #Earth mass
 
     self.x_forward = True
     self.y_forward = True
 
+    radius = self.surf.get_width() // 2
     pygame.draw.circle(self.surf, self.colour, (radius, radius), radius)
 
   def update(self, dt):
