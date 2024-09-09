@@ -9,5 +9,7 @@ and click r to create planets
 
 ### Keybindings
 ESC - quit simulation
+
 r - start game / restart
+
 spacebar - pause / unpause
