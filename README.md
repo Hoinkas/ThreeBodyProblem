@@ -1,15 +1,15 @@
 # ThreeBodyProblem
 
 ## Install Dependencies
-pip install -r requirements.txt
+``pip install -r requirements.txt``
 
 ## Run simulation
-python main.py
-and click r to create planets
+run ``python main.py``
+and click 'r' to create planets
 
 ### Keybindings
-ESC - quit simulation
+'ESC' - quit simulation
 
-r - start game / restart
+'r' - start game / restart
 
-spacebar - pause / unpause
+'spacebar' - pause / unpause
